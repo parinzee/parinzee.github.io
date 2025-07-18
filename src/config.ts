@@ -40,13 +40,13 @@ export const SOCIALS: SocialObjects = [
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/parinthapat-pengpun/",
+    href: "https://www.linkedin.com/in/parinthapat-pengpun-a52099246/?originalSubdomain=th",
     linkTitle: `${SITE.title} on LinkedIn`,
     active: true,
   },
   {
     name: "Mail",
-    href: "mailto:parinzee@protonmail.com",
+    href: "mailto:parin@cmu.edu",
     linkTitle: `Send an email to ${SITE.author}`,
     active: true,
   },
