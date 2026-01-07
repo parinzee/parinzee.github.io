@@ -1,121 +1,203 @@
 ---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
-import { SITE, SOCIALS } from "@config";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import LinkButton from "@components/LinkButton.astro";
+import Hr from "@components/Hr.astro";
+import Card from "@components/Card";
 import Socials from "@components/Socials.astro";
+import getSortedPosts from "@utils/getSortedPosts";
+import { SITE, SOCIALS } from "@config";
+import profileImage from "@assets/images/profile_400.jpg";
+
+const posts = await getCollection("blog");
+
+const sortedPosts = getSortedPosts(posts);
+const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+
+const socialCount = SOCIALS.filter(social => social.active).length;
 ---
 
 <Layout>
-  <main class="landing-container">
-    <div class="content">
-      <h1>Welcome to <span class="author-name">{SITE.author}'s</span> Blog</h1>
-      
-      <div class="construction-notice">
-        <div class="icon-container">
-          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-          </svg>
+  <Header />
+  <main id="main-content">
+    <section id="hero">
+      <div class="hero-header">
+        <div class="profile-image-container">
+          <Image
+            src={profileImage}
+            alt="Parin Pengpun Profile Image – AI researcher and CMU freshman"
+            class="profile-image"
+            width={400}
+            height={400}
+            loading="eager"
+            decoding="async"
+          />
         </div>
-        
-        <div class="message">
-          <h2>Site Under Construction</h2>
-          <p>
-            Thank you for visiting! I'm currently working on my personal website 
-            where I'll be sharing research, projects, and thoughts at the intersection 
-            of CS, AI, Biology, Philosophy, and more.
-          </p>
-          <p>Please check back soon for updates!</p>
+        <div class="hero-title">
+          <h1>hi, I'm Parin!</h1>
+          <a
+            target="_blank"
+            href="/rss.xml"
+            class="rss-link"
+            aria-label="rss feed"
+            title="RSS Feed"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
+              ><path
+                d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
+              ></path><path
+                d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
+              ></path><circle cx="6" cy="18" r="2"></circle>
+            </svg>
+            <span class="sr-only">RSS Feed</span>
+          </a>
         </div>
       </div>
+      <div class="hero-content">
+        <p>
+          I'm a freshman at Carnegie Mellon University studying Artificial Intelligence. You may know me from:
 
-      <div class="cta-section">
-        <a href="https://github.com/parinzee" class="github-button" target="_blank" rel="noopener noreferrer">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg>
-          Visit My GitHub
-        </a>
-        <a href="/blog" class="blog-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-          </svg>
-          View Blog Preview
-        </a>
+          <ul>
+            <li>creating <a href="https://opentyphoon.ai/blog/en/typhoon-vision-preview-release-0bdef028ca55">Thailand's first vision-language model</a> while in 11th Grade.</li>
+            <li><a href="https://scholar.google.com/citations?user=1gbFjCwAAAAJ&hl=en">research</a> on agents, synthetic data, multimodal LLMs etc.</li>
+            <li>competitions and hackathons that I've <a href="/competitions">competed in</a></li>
+          </ul>
+        </p>
+        {
+          // only display if at least one social link is enabled
+          socialCount > 0 && (
+            <div class="social-wrapper">
+              <div class="social-links">Social Links:</div>
+              <Socials />
+            </div>
+          )
+        }
       </div>
+    </section>
 
-      <div class="social-container">
-        <h3>Connect With Me:</h3>
-        <Socials />
-      </div>
+    <Hr />
+
+    {
+      featuredPosts.length > 0 && (
+        <>
+          <section id="featured">
+            <h2>Featured</h2>
+            <ul>
+              {featuredPosts.map(({ data, slug }) => (
+                <Card
+                  href={`/posts/${slug}/`}
+                  frontmatter={data}
+                  secHeading={false}
+                />
+              ))}
+            </ul>
+          </section>
+          {recentPosts.length > 0 && <Hr />}
+        </>
+      )
+    }
+
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts">
+          <h2>Recent Posts</h2>
+          <ul>
+            {recentPosts.map(
+              ({ data, slug }, index) =>
+                index < SITE.postPerIndex && (
+                  <Card
+                    href={`/posts/${slug}/`}
+                    frontmatter={data}
+                    secHeading={false}
+                  />
+                )
+            )}
+          </ul>
+        </section>
+      )
+    }
+
+    <div class="all-posts-btn-wrapper">
+      <LinkButton href="/posts/">
+        All Posts
+        <svg xmlns="http://www.w3.org/2000/svg"
+          ><path
+            d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+          ></path>
+        </svg>
+      </LinkButton>
     </div>
   </main>
+
+  <Footer />
 </Layout>
 
 <style>
-  .landing-container {
-    @apply flex min-h-screen items-center justify-center px-4 py-12;
+  /* ===== Hero Section ===== */
+  #hero {
+    @apply pb-6 pt-8;
+  }
+  .hero-header {
+    @apply flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6;
+  }
+  .profile-image-container {
+    @apply flex-shrink-0;
+  }
+  .profile-image {
+    @apply h-32 w-32 rounded-full object-cover 
+           ring-4 ring-amber-200/30 
+           shadow-lg shadow-amber-200/10
+           transition-shadow duration-300
+           rotate-12
+           hover:ring-amber-200/50 hover:shadow-xl
+           sm:h-32 sm:w-32;
+  }
+  .hero-title {
+    @apply flex items-center gap-2;
+  }
+  #hero h1 {
+    @apply inline-block text-3xl font-bold sm:text-4xl;
+  }
+  #hero .rss-link {
+    @apply flex items-center;
+  }
+  #hero .rss-icon {
+    @apply h-6 w-6 scale-110 fill-skin-accent sm:scale-125;
+  }
+  .hero-content {
+    @apply mt-4;
+  }
+  #hero p {
+    @apply my-2;
+  }
+  .social-wrapper {
+    @apply mt-4 flex flex-col sm:flex-row sm:items-center;
+  }
+  .social-links {
+    @apply mb-1 mr-2 whitespace-nowrap sm:mb-0;
+  }
+  #hero ul {
+    @apply list-disc pl-5;
   }
 
-  .content {
-    @apply max-w-3xl rounded-lg p-8 text-center;
-    background-color: var(--color-card);
-    box-shadow: var(--shadow-sm);
+  #hero a {
+    @apply text-skin-accent underline decoration-wavy;
   }
 
-  h1 {
-    @apply mb-8 text-4xl font-bold tracking-tight sm:text-5xl 
+  /* ===== Featured & Recent Posts Sections ===== */
+  #featured,
+  #recent-posts {
+    @apply pb-6 pt-12;
   }
-  .author-name {
-    @apply text-4xl font-bold tracking-tight sm:text-5xl bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent
+  #featured h2,
+  #recent-posts h2 {
+    @apply text-2xl font-semibold tracking-wide;
   }
-
-  .construction-notice {
-    @apply mb-10 flex flex-col items-center justify-center space-y-6 px-4 sm:flex-row sm:space-x-8 sm:space-y-0 sm:px-0;
+  .all-posts-btn-wrapper {
+    @apply my-8 text-center;
   }
-
-  .icon-container {
-    @apply flex h-16 w-16 shrink-0 items-center justify-center rounded-full sm:h-24 sm:w-24;
-    color: var(--color-accent);
-  }
-
-  .message {
-    @apply text-left sm:max-w-md;
-  }
-
-  .message h2 {
-    @apply mb-3 text-2xl font-bold;
-  }
-
-  .message p {
-    @apply mb-3 text-base opacity-90;
-  }
-
-  .cta-section {
-    @apply mt-8 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0;
-  }
-
-  .cta-section a {
-    @apply flex items-center justify-center rounded-lg px-6 py-3 text-center font-medium transition-all duration-200;
-  }
-
-  .cta-section a svg {
-    @apply mr-2 h-5 w-5;
-  }
-
-  .github-button {
-    @apply bg-neutral-800 text-white hover:bg-neutral-700 dark:bg-neutral-700 dark:hover:bg-neutral-600;
-  }
-
-  .blog-button {
-    @apply border-2 border-skin-accent text-skin-accent hover:bg-skin-accent hover:text-white;
-  }
-
-  .social-container {
-    @apply mt-10 flex flex-col items-center justify-center;
-  }
-
-  .social-container h3 {
-    @apply mb-4 text-lg font-semibold;
-  }
-
 </style>
