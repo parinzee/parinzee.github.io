@@ -22,7 +22,7 @@ And yet I feel so far away.
 
 There's this weird ache between achieving what you dreamed of and actually **feeling** like you've made it. I thought hitting these milestones would feel like arriving somewhere. Instead, it feels like standing at the base of a much larger mountain I didn't know existed.
 
-![Image from The Climber](/src/assets/images/a-reflection-on-18-years-of-life/climber.jpg)
+![Image from The Climber](@assets/images/a-reflection-on-18-years-of-life/climber.jpg)
 
 ## The Tiredness
 
